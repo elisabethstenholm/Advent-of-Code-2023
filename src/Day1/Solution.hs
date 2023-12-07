@@ -21,8 +21,8 @@ splitAtDigits s@(x:xs)
     let (s1, s2) = break isDigit s
     in  Right s1 : splitAtDigits s2
 
-m2l :: (Alternative f) => Maybe a -> f a
-m2l = maybe empty pure
+m2l :: (Alternative f, Foldable t, Functor t) => t a -> f a
+m2l = foldl (<|>) empty . (pure <$>)
 
 -- Convert all numbers (words) in a string to digits
 allNumInStr :: String -> [Char]
