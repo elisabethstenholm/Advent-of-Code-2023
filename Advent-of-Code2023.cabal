@@ -27,6 +27,7 @@ library
     exposed-modules:
         Day1.Solution
         Day2.Solution
+        Utils
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -36,7 +37,8 @@ library
     build-depends:
         base,
         containers,
-        megaparsec
+        megaparsec,
+        parser-combinators
 
     hs-source-dirs:   src
     default-language: Haskell2010
@@ -48,13 +50,15 @@ executable Advent-of-Code2023
     other-modules:
         Day1.Solution
         Day2.Solution
+        Utils
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
     build-depends:
         base,
         containers,
-        megaparsec
+        megaparsec,
+        parser-combinators
 
     hs-source-dirs:   src
     default-language: Haskell2010

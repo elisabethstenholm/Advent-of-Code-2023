@@ -1,30 +1,63 @@
+{-# LANGUAGE TupleSections #-}
+
 module Day2.Solution where
 
+import Utils
+
 import Data.Void (Void)
-import Text.Megaparsec (Parsec)
+import Text.Megaparsec (Parsec, parseMaybe)
 import Text.Megaparsec.Char (string, space, char)
 import Text.Megaparsec.Char.Lexer (decimal)
 import Data.Map (Map)
 import qualified Data.Map as Map
+import Control.Applicative ((<|>))
+import Data.Functor (($>))
+import Control.Applicative.Combinators (sepBy)
+import Control.Monad (guard)
+import Control.Arrow ((***))
+import Data.Tuple (swap)
+import Data.List (sort, groupBy)
 
 type Parser = Parsec Void String
 
-numCubes :: (Num a) => Map String a
-numCubes = Map.fromList [("red", 12), ("green", 13), ("blue", 14)]
+data Color = Red | Green | Blue
+  deriving (Eq, Show, Ord)
+
+maxCubes :: (Num a) => Color -> a
+maxCubes Red = 12
+maxCubes Green = 13
+maxCubes Blue = 14
+
+pColor :: Parser Color
+pColor =
+  string "red" $> Red
+  <|> string "green" $> Green
+  <|> string "blue" $> Blue
 
 pGameNumber :: (Num a) => Parser a
-pGameNumber = do
-    string "Game"
-    space
-    n <- decimal
-    char ':'
-    pure 0
+pGameNumber = string "Game" *> space *> decimal <* char ':'
 
-pGame :: (Num a) => Parser (a, [(a, String)])
-pGame = _
+pCubes :: (Num a) => Parser [(a, Color)]
+pCubes = (((,) <$> decimal) <*> (space *> pColor)) `sepBy` (char ',' *> space)
+
+pGame :: (Num a) => Parser (a, [[(a, Color)]])
+pGame = ((,) <$> pGameNumber <* space) <*> (pCubes `sepBy` (char ';' *> space))
 
 solve1 :: String -> Integer
-solve1 _ = 0
+solve1 s = sum $ do
+  l <- lines s
+  (n, games) <- choice $ parseMaybe pGame l
+  guard $ all (uncurry (<=) . (id *** maxCubes)) $ concat games
+  return n
 
 solve2 :: String -> Integer
-solve2 _ = 0
+solve2 s = sum $ do
+  l <- lines s
+  (_, games) <- choice $ parseMaybe pGame l
+  return 
+    $ product 
+    $ last . map snd 
+    <$> ((groupBy ((. fst) . (==) . fst)) 
+    $ sort 
+    $ swap 
+    <$> concat games)

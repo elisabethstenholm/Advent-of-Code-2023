@@ -1,12 +1,13 @@
 module Day1.Solution where
 
+import Utils
+
 import Data.Char (isDigit)
 import Data.List (tails, inits)
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Set (Set)
 import qualified Data.Set as Set
-import Control.Applicative
 
 wordToDigit :: Map String Char
 wordToDigit =
@@ -21,15 +22,12 @@ splitAtDigits s@(x:xs)
     let (s1, s2) = break isDigit s
     in  Right s1 : splitAtDigits s2
 
-m2l :: (Alternative f, Foldable t, Functor t) => t a -> f a
-m2l = foldl (<|>) empty . (pure <$>)
-
 -- Convert all numbers (words) in a string to digits
 allNumInStr :: String -> [Char]
 allNumInStr s = do
   t <- tails s
   i <- inits t
-  m2l $ Map.lookup i wordToDigit
+  choice $ Map.lookup i wordToDigit
 
 -- Convert all numbers in a string (words or digits) to digits
 convertToNumbers :: String -> [Char]
