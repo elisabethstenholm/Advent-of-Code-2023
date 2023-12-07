@@ -8,8 +8,8 @@ import Data.Set (Set)
 import qualified Data.Set as Set
 import Control.Applicative
 
-wordToNum :: Map String Char
-wordToNum =
+wordToDigit :: Map String Char
+wordToDigit =
   Map.fromList 
     $ zip ["zero","one","two","three","four","five","six","seven","eight","nine"] ['0'..]
 
@@ -29,7 +29,7 @@ allNumInStr :: String -> [Char]
 allNumInStr s = do
   t <- tails s
   i <- inits t
-  m2l $ Map.lookup i wordToNum
+  m2l $ Map.lookup i wordToDigit
 
 -- Convert all numbers in a string (words or digits) to digits
 convertToNumbers :: String -> [Char]
