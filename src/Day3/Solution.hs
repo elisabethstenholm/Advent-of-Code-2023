@@ -6,7 +6,6 @@ import Control.Monad (guard)
 import Data.Char (isDigit)
 import Data.List (groupBy)
 import Control.Arrow ((&&&))
-import Control.Concurrent (yield)
 
 type Position = (Integer, Integer)
 

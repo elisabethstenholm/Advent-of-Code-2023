@@ -28,6 +28,7 @@ library
         Day1.Solution
         Day2.Solution
         Day3.Solution
+        Day4.Solution
         Utils
 
     -- Modules included in this library but not exported.
@@ -52,6 +53,7 @@ executable Advent-of-Code2023
         Day1.Solution
         Day2.Solution
         Day3.Solution
+        Day4.Solution
         Utils
 
     -- LANGUAGE extensions used by modules in this package.
