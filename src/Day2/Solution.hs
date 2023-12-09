@@ -1,11 +1,8 @@
-{-# LANGUAGE TupleSections #-}
-
 module Day2.Solution where
 
 import Utils
 
-import Data.Void (Void)
-import Text.Megaparsec (Parsec, parseMaybe)
+import Text.Megaparsec (parseMaybe)
 import Text.Megaparsec.Char (string, space, char)
 import Text.Megaparsec.Char.Lexer (decimal)
 import Data.Map (Map)
@@ -14,11 +11,9 @@ import Control.Applicative ((<|>))
 import Data.Functor (($>))
 import Control.Applicative.Combinators (sepBy)
 import Control.Monad (guard)
-import Control.Arrow ((***))
+import Control.Arrow (second)
 import Data.Tuple (swap)
 import Data.List (sort, groupBy)
-
-type Parser = Parsec Void String
 
 data Color = Red | Green | Blue
   deriving (Eq, Show, Ord)
@@ -47,7 +42,7 @@ solve1 :: String -> Integer
 solve1 s = sum $ do
   l <- lines s
   (n, games) <- choice $ parseMaybe pGame l
-  guard $ all (uncurry (<=) . (id *** maxCubes)) $ concat games
+  guard $ all (uncurry (<=) . second maxCubes) $ concat games
   return n
 
 solve2 :: String -> Integer

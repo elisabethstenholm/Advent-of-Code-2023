@@ -46,11 +46,3 @@ solve1 = sum . map (firstAndLastToInteger . filter isDigit) . lines
 solve2 :: String -> Integer
 solve2 =
   sum . map (firstAndLastToInteger . convertToNumbers) . lines
-
-foo :: IO ()
-foo = do
-  contents <- readFile "src/Day1/input.txt"
-  putStrLn "Part 1:"
-  print $ solve1 contents
-  putStrLn "Part 2:"
-  print $ solve2 contents
