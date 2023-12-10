@@ -1,4 +1,4 @@
-module Utils (Parser, choice, tryDefault, many', sepBy') where
+module Utils (Parser, choice, tryDefault, many', sepBy', atOdds, atEvens) where
 
 import Control.Applicative
 import Data.Void (Void)
@@ -23,4 +23,12 @@ sepBy' p sep
     = tryDefault p
                 (return [])
                 ((<$> (many' (sep >> p) <|> return [])) . (:))
+
+atOdds :: [a] -> [a]
+atOdds [] = []
+atOdds (x:xs) = x : atEvens xs
+
+atEvens :: [a] -> [a]
+atEvens [] = []
+atEvens (x:xs) = atOdds xs
 

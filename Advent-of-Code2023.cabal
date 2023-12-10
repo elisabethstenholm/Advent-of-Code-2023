@@ -28,7 +28,8 @@ library
         -- Day1.Solution
         -- Day2.Solution
         -- Day3.Solution
-        Day4.Solution
+        -- Day4.Solution
+        Day5.Solution
         Utils
 
     -- Modules included in this library but not exported.
@@ -40,7 +41,8 @@ library
         base,
         containers,
         megaparsec,
-        parser-combinators
+        parser-combinators,
+        ghc
 
     hs-source-dirs:   src
     default-language: Haskell2010
@@ -53,7 +55,8 @@ executable Advent-of-Code2023
         -- Day1.Solution
         -- Day2.Solution
         -- Day3.Solution
-        Day4.Solution
+        -- Day4.Solution
+        Day5.Solution
         Utils
 
     -- LANGUAGE extensions used by modules in this package.
@@ -62,7 +65,8 @@ executable Advent-of-Code2023
         base,
         containers,
         megaparsec,
-        parser-combinators
+        parser-combinators,
+        ghc
 
     hs-source-dirs:   src
     default-language: Haskell2010
